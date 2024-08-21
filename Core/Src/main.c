@@ -31,7 +31,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-uint32_t timeval;
 uint16_t sinval;
 /* USER CODE END PD */
 
@@ -42,9 +41,7 @@ uint16_t sinval;
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c2;
-
 TIM_HandleTypeDef htim10;
-
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
@@ -65,7 +62,6 @@ uint8_t setValue(uint16_t value);
 /* USER CODE BEGIN 0 */
 // First, create an MCP4725 object:
 MCP4725 myMCP4725;
-
 uint32_t micro_seconds = 0;
 /* USER CODE END 0 */
 
@@ -316,9 +312,8 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	// Create a 100Hz sine wave:
+	// Create a 1Hz sine wave:
 	if(htim == &htim10){
-	timeval  = __HAL_TIM_GET_COUNTER(&htim10);
 	sinval = sinf( 2 * 3.141592 * 100 * (micro_seconds++) / 10000.0 ) * 2047 + 2048;
 	setValue((uint16_t)( sinval ));
 	}
